@@ -1,1 +1,4 @@
-console.log(5 + 9)
+let logo = document.getElementById('tildacopy')
+
+console.log(logo)
+logo.remove()
