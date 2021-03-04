@@ -44,7 +44,7 @@ const TildaInterceptor = function (freshUrl)
 		for (const key in requestData) {
 			const value = requestData[key]
 
-			if (key.match(/(^tilda)|(form-spec-comments)/gm))
+			if (key.match(/(^tilda)|(form-spec-comments)|(^formservices)/gm))
 				continue
 
 			result[key] = value
@@ -59,7 +59,7 @@ const TildaInterceptor = function (freshUrl)
 		return result
 	}
 
-	this.handleXhr = function (xhr, request, freshUrl)
+	this.handleXhr = function (xhr, request)
 	{
 		const triggers = ['forms.tildacdn.com', 'forms2.tildacdn.com']
 
@@ -69,7 +69,7 @@ const TildaInterceptor = function (freshUrl)
 
 		if (redirectUrl) {
 			xhr.abort()
-			request.url = freshUrl
+			request.url = this.freshUrl
 			const normalizedData = _this.parseXhrData(request.data)
 			request.data = _this.refreshData(normalizedData)
 			$.ajax(request)
@@ -78,7 +78,7 @@ const TildaInterceptor = function (freshUrl)
 
 	$.ajaxSetup({
 		beforeSend: function (xhr, request) {
-			_this.handleXhr(xhr, request, interceptorFormUrl)
+			_this.handleXhr(xhr, request)
 		}
 	})
 }
