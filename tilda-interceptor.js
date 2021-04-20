@@ -47,7 +47,7 @@ const TildaInterceptor = function (freshUrl)
 			if (key.match(/(^tilda)|(form-spec-comments)|(^formservices)/gm))
 				continue
 
-			result[key] = value
+			result[key] = value.replace(/\+/g, ' ').replace(/&quot;/g, '\"')
 		}
 
 		if (requestData.hasOwnProperty('tildapayment')) {
